@@ -1,0 +1,13 @@
+{
+  "domain": "astronaut_projector_infrared",
+  "name": "Astronaut Projector Infrared",
+  "codeowners": ["@Dr-Blank"],
+  "config_flow": true,
+  "dependencies": ["infrared"],
+  "documentation": "https://github.com/Dr-Blank/astronaut-projector-ha",
+  "integration_type": "device",
+  "iot_class": "assumed_state",
+  "issue_tracker": "https://github.com/Dr-Blank/astronaut-projector-ha/issues",
+  "requirements": [],
+  "version": "1.0.0"
+}

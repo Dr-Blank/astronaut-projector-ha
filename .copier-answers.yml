@@ -1,0 +1,13 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v1.1.0
+_src_path: https://github.com/Dr-Blank/ha-integration-ci
+description: Home Assistant integration for astronaut galaxy star projectors over
+    infrared
+display_name: Astronaut Projector Infrared
+domain: astronaut_projector_infrared
+editable_library: ''
+hacs_ignore: brands
+homeassistant_min: 2026.10.0
+mypy_untyped_modules:
+- infrared_protocols.*
+repo_name: astronaut-projector-ha

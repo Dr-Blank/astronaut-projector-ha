@@ -1,0 +1,52 @@
+{
+  "entity": {
+    "button": {
+      "cancel_timer": {
+        "default": "mdi:timer-off-outline"
+      },
+      "nebula_brightness_down": {
+        "default": "mdi:brightness-5"
+      },
+      "nebula_brightness_up": {
+        "default": "mdi:brightness-7"
+      },
+      "nebula_speed_down": {
+        "default": "mdi:speedometer-slow"
+      },
+      "nebula_speed_up": {
+        "default": "mdi:speedometer"
+      },
+      "star_breathing_down": {
+        "default": "mdi:chevron-down"
+      },
+      "star_breathing_up": {
+        "default": "mdi:chevron-up"
+      },
+      "star_brightness_down": {
+        "default": "mdi:brightness-5"
+      },
+      "star_brightness_up": {
+        "default": "mdi:brightness-7"
+      },
+      "timer": {
+        "default": "mdi:timer-outline"
+      }
+    },
+    "select": {
+      "nebula_color": {
+        "default": "mdi:palette"
+      }
+    },
+    "switch": {
+      "nebula": {
+        "default": "mdi:weather-night"
+      },
+      "power": {
+        "default": "mdi:power"
+      },
+      "stars": {
+        "default": "mdi:star-four-points"
+      }
+    }
+  }
+}

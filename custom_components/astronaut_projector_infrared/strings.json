@@ -1,0 +1,85 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This infrared transmitter is already configured to control a projector.",
+      "no_emitters": "No infrared transmitter entities found. Please set up an infrared device first."
+    },
+    "step": {
+      "user": {
+        "data": {
+          "infrared_emitter_entity_id": "Infrared transmitter"
+        },
+        "data_description": {
+          "infrared_emitter_entity_id": "The infrared transmitter entity in line of sight of the projector."
+        },
+        "description": "Control an astronaut galaxy star projector through an infrared transmitter.",
+        "title": "Set up Astronaut Projector"
+      }
+    }
+  },
+  "entity": {
+    "button": {
+      "cancel_timer": {
+        "name": "Cancel timer"
+      },
+      "nebula_brightness_down": {
+        "name": "Nebula brightness down"
+      },
+      "nebula_brightness_up": {
+        "name": "Nebula brightness up"
+      },
+      "nebula_speed_down": {
+        "name": "Nebula speed down"
+      },
+      "nebula_speed_up": {
+        "name": "Nebula speed up"
+      },
+      "star_breathing_down": {
+        "name": "Star breathing down"
+      },
+      "star_breathing_up": {
+        "name": "Star breathing up"
+      },
+      "star_brightness_down": {
+        "name": "Star brightness down"
+      },
+      "star_brightness_up": {
+        "name": "Star brightness up"
+      },
+      "timer": {
+        "name": "Timer"
+      }
+    },
+    "select": {
+      "nebula_color": {
+        "name": "Nebula color",
+        "state": {
+          "auto_cycle": "Auto cycle",
+          "blue": "Blue",
+          "blue_green": "Blue and green",
+          "green": "Green",
+          "red": "Red",
+          "red_blue": "Red and blue",
+          "red_blue_green": "Red, blue and green",
+          "red_green": "Red and green"
+        }
+      }
+    },
+    "switch": {
+      "nebula": {
+        "name": "Nebula"
+      },
+      "power": {
+        "name": "Power"
+      },
+      "stars": {
+        "name": "Stars"
+      }
+    }
+  },
+  "exceptions": {
+    "powered_off": {
+      "message": "The projector is off. Turn it on first."
+    }
+  }
+}
