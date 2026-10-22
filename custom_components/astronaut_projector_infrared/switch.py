@@ -77,7 +77,11 @@ class AstronautProjectorPowerSwitch(AstronautProjectorSwitch):
         The toggle is sent even when the projector is assumed on already, so
         pressing on again is how a projector out of step is brought back.
         """
-        await self._send_command(AstronautProjectorCode.POWER.to_command())
+        await self._send_command(
+            AstronautProjectorCode.POWER.to_command(
+                repeats=self._projector.power_on_repeats
+            )
+        )
         self._projector.power_on()
         self._projector.async_notify()
 

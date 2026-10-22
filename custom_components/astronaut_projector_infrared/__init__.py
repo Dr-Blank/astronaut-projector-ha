@@ -5,7 +5,7 @@ from homeassistant.core import HomeAssistant
 
 from .state import AstronautProjectorConfigEntry, ProjectorState
 
-PLATFORMS = [Platform.BUTTON, Platform.SELECT, Platform.SWITCH]
+PLATFORMS = [Platform.BUTTON, Platform.NUMBER, Platform.SELECT, Platform.SWITCH]
 
 
 async def async_setup_entry(

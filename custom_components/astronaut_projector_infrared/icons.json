@@ -32,6 +32,11 @@
         "default": "mdi:timer-outline"
       }
     },
+    "number": {
+      "power_on_repeats": {
+        "default": "mdi:repeat"
+      }
+    },
     "select": {
       "nebula_color": {
         "default": "mdi:palette"

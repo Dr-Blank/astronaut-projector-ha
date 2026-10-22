@@ -89,6 +89,7 @@ The integration sends 12 repeats (about 1.2 s) for a margin.
 ### Power
 
 - Short press toggles power [tested]. A long press does nothing extra [tested].
+- A tap on the remote sends the frame and one repeat: 46 of 48 captured taps, the other two came in quick succession with no repeat received [tested]. A lone frame with no repeat turns the unit off but did not turn it on in Home Assistant, so the integration sends one repeat on power-on by default.
 - While the unit is off, every other code is ignored. Only power turns it on [tested].
 - Power-on always comes up in the same state, with no memory of how it was switched off [tested]:
   - stars on

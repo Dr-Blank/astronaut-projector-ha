@@ -50,6 +50,11 @@
         "name": "Timer"
       }
     },
+    "number": {
+      "power_on_repeats": {
+        "name": "Power-on repeats"
+      }
+    },
     "select": {
       "nebula_color": {
         "name": "Nebula color",

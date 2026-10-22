@@ -7,6 +7,8 @@ from enum import StrEnum
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import CALLBACK_TYPE, callback
 
+from .codes import DEFAULT_POWER_ON_REPEATS
+
 
 class NebulaColor(StrEnum):
     """Nebula colours, in the order the colour button steps through them."""
@@ -37,6 +39,7 @@ class ProjectorState:
     stars: bool = False
     nebula: bool = False
     nebula_color: NebulaColor | None = None
+    power_on_repeats: int = DEFAULT_POWER_ON_REPEATS
     _listeners: list[Callable[[], None]] = field(default_factory=list, repr=False)
 
     def power_on(self) -> None:
