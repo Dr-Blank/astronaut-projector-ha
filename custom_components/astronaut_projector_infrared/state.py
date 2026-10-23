@@ -26,6 +26,18 @@ class NebulaColor(StrEnum):
 NEBULA_COLORS = list(NebulaColor)
 
 
+class PowerOnMethod(StrEnum):
+    """How power-on is sent; units differ in which one they take reliably.
+
+    Some units sleep deeply a few seconds after switching off and spend the
+    first press waking up, so they need a double press. Others take the first
+    press, so a double press turns them on and straight off again.
+    """
+
+    SINGLE = "single"
+    DOUBLE = "double"
+
+
 @dataclass
 class ProjectorState:
     """What Home Assistant last told the projector to do.
@@ -40,6 +52,7 @@ class ProjectorState:
     nebula: bool = False
     nebula_color: NebulaColor | None = None
     power_on_repeats: int = DEFAULT_POWER_ON_REPEATS
+    power_on_method: PowerOnMethod = PowerOnMethod.SINGLE
     _listeners: list[Callable[[], None]] = field(default_factory=list, repr=False)
 
     def power_on(self) -> None:

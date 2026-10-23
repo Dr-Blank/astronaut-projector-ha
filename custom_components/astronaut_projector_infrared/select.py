@@ -5,13 +5,19 @@ from typing import override
 from infrared_protocols.commands import Command
 
 from homeassistant.components.select import SelectEntity
+from homeassistant.const import EntityCategory
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.restore_state import RestoreEntity
 
 from .codes import AstronautProjectorCode
 from .entity import AstronautProjectorEntity
-from .state import NEBULA_COLORS, AstronautProjectorConfigEntry, NebulaColor
+from .state import (
+    NEBULA_COLORS,
+    AstronautProjectorConfigEntry,
+    NebulaColor,
+    PowerOnMethod,
+)
 
 PARALLEL_UPDATES = 1
 
@@ -21,8 +27,13 @@ async def async_setup_entry(
     entry: AstronautProjectorConfigEntry,
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up the astronaut projector nebula colour select."""
-    async_add_entities([AstronautProjectorNebulaColorSelect(entry, "nebula_color")])
+    """Set up the astronaut projector selects."""
+    async_add_entities(
+        [
+            AstronautProjectorNebulaColorSelect(entry, "nebula_color"),
+            AstronautProjectorPowerOnMethodSelect(entry, "power_on_method"),
+        ]
+    )
 
 
 class AstronautProjectorNebulaColorSelect(
@@ -83,3 +94,38 @@ class AstronautProjectorNebulaColorSelect(
         self._projector.nebula = True
         self._projector.nebula_color = NebulaColor(option)
         self._projector.async_notify()
+
+
+class AstronautProjectorPowerOnMethodSelect(
+    AstronautProjectorEntity, SelectEntity, RestoreEntity
+):
+    """How power-on is sent, picked by whichever the unit takes reliably."""
+
+    _attr_entity_category = EntityCategory.CONFIG
+    _attr_options = [method.value for method in PowerOnMethod]
+
+    def __init__(self, entry: AstronautProjectorConfigEntry, key: str) -> None:
+        """Initialize the select."""
+        super().__init__(entry, key)
+        self._attr_translation_key = key
+
+    @override
+    async def async_added_to_hass(self) -> None:
+        """Restore the last setting."""
+        await super().async_added_to_hass()
+        if (
+            last_state := await self.async_get_last_state()
+        ) is not None and last_state.state in self._attr_options:
+            self._projector.power_on_method = PowerOnMethod(last_state.state)
+
+    @property
+    @override
+    def current_option(self) -> str:
+        """Return the power-on method."""
+        return self._projector.power_on_method
+
+    @override
+    async def async_select_option(self, option: str) -> None:
+        """Set the power-on method."""
+        self._projector.power_on_method = PowerOnMethod(option)
+        self.async_write_ha_state()

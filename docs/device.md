@@ -95,7 +95,8 @@ The integration sends 12 repeats (about 1.2 s) for a margin.
   - Changing the timing or a 36 kHz carrier made no difference.
   - Sending right after switching off worked. The weak unit seems to fall into a deeper sleep a few seconds after switching off and spend the first frame waking up.
   - Two full power frames 200 ms apart turned the weak unit on 10 times out of 10, but the other unit took both and turned on then straight off again.
-  - So the integration sends a wake-up frame first (address `0x00`, command `0x00`, not on the remote), then power 0.5 s later. Its effect on the weak unit is not tested yet.
+  - A wake-up frame that is not on the remote (address `0x00`, command `0x00`) sent 0.5 s before power made the weak unit worse: 1 out of 10.
+  - So no single signal suits both units. The integration's **Power-on method** select offers a single press (default) or a double press, 200 ms apart in one transmission.
 - While the unit is off, every other code is ignored. Only power turns it on [tested].
 - Power-on always comes up in the same state, with no memory of how it was switched off [tested]:
   - stars on

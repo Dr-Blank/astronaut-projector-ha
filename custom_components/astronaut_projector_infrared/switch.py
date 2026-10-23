@@ -9,9 +9,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.restore_state import RestoreEntity
 
-from .codes import AstronautProjectorCode, wake_command
+from .codes import AstronautProjectorCode, DoublePressCommand
 from .entity import AstronautProjectorEntity
-from .state import AstronautProjectorConfigEntry, NebulaColor
+from .state import AstronautProjectorConfigEntry, NebulaColor, PowerOnMethod
 
 PARALLEL_UPDATES = 1
 
@@ -72,17 +72,17 @@ class AstronautProjectorPowerSwitch(AstronautProjectorSwitch):
 
     @override
     async def async_turn_on(self, **kwargs: Any) -> None:
-        """Wake the projector, send the power toggle and assume it came on.
+        """Send the power toggle and assume the projector came on.
 
         The toggle is sent even when the projector is assumed on already, so
         pressing on again is how a projector out of step is brought back.
         """
-        await self._send_commands(
-            wake_command(),
-            AstronautProjectorCode.POWER.to_command(
-                repeats=self._projector.power_on_repeats
-            ),
+        command = AstronautProjectorCode.POWER.to_command(
+            repeats=self._projector.power_on_repeats
         )
+        if self._projector.power_on_method is PowerOnMethod.DOUBLE:
+            command = DoublePressCommand(command)
+        await self._send_command(command)
         self._projector.power_on()
         self._projector.async_notify()
 

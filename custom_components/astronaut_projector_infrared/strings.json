@@ -68,6 +68,13 @@
           "red_blue_green": "Red, blue and green",
           "red_green": "Red and green"
         }
+      },
+      "power_on_method": {
+        "name": "Power-on method",
+        "state": {
+          "double": "Double press",
+          "single": "Single press"
+        }
       }
     },
     "switch": {

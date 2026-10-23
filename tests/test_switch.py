@@ -57,7 +57,7 @@ async def test_power_on_resets_everything(
 
     await _switch(hass, SERVICE_TURN_ON, POWER)
 
-    assert sent(mock_emitter) == [(0x00, 0), (0x45, 1)]
+    assert sent(mock_emitter) == [(0x45, 1)]
     for entity_id in (POWER, STARS, NEBULA):
         assert hass.states.get(entity_id).state == STATE_ON
     assert hass.states.get(COLOR).state == "auto_cycle"
@@ -69,7 +69,7 @@ async def test_power_toggle_always_sent(
 ) -> None:
     """Test power sends its toggle even when already in the asked state."""
     await _switch(hass, SERVICE_TURN_ON, POWER)
-    assert sent(mock_emitter) == [(0x00, 0), (0x45, 1)]
+    assert sent(mock_emitter) == [(0x45, 1)]
 
     await _switch(hass, SERVICE_TURN_OFF, POWER)
     assert sent(mock_emitter) == [(0x45, 0)]

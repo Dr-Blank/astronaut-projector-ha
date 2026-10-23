@@ -40,6 +40,9 @@
     "select": {
       "nebula_color": {
         "default": "mdi:palette"
+      },
+      "power_on_method": {
+        "default": "mdi:power-settings"
       }
     },
     "switch": {

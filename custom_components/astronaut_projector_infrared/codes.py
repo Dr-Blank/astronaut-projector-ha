@@ -6,6 +6,7 @@ after the frame: 7 or more repeats, about 0.7 s, count as a long press.
 """
 
 from enum import IntEnum
+from typing import override
 
 from infrared_protocols.commands import Command
 from infrared_protocols.commands.nec import NECCommand
@@ -23,10 +24,9 @@ SHORT_PRESS_MAX_REPEATS = 6
 # A tap on the remote sends the frame and one repeat.
 DEFAULT_POWER_ON_REPEATS = 1
 
-# Not on the remote. Some units fall into a deeper sleep a few seconds after
-# switching off and spend the first frame they see waking up, so power-on sends
-# this first. An off projector ignores every code except power.
-WAKE_CODE = 0x00
+# Between the two presses of a double press, short enough that a unit woken by
+# the first press is still awake for the second.
+DOUBLE_PRESS_GAP_US = 200_000
 
 
 class AstronautProjectorCode(IntEnum):
@@ -58,6 +58,20 @@ class AstronautProjectorCode(IntEnum):
         )
 
 
-def wake_command() -> Command:
-    """Build the frame that wakes a sleeping projector without pressing a button."""
-    return NECCommand(address=ADDRESS, command=WAKE_CODE, repeat_count=0)
+class DoublePressCommand(Command):  # type: ignore[misc]
+    """A press sent twice in one transmission, DOUBLE_PRESS_GAP_US apart.
+
+    One transmission keeps the gap exact; two separate sends would add the
+    network and Home Assistant delays to it.
+    """
+
+    def __init__(self, press: Command) -> None:
+        """Initialize the double press."""
+        super().__init__(modulation=press.modulation)
+        self.press = press
+
+    @override
+    def get_raw_timings(self) -> list[int]:
+        """Return the press, the gap, then the press again."""
+        timings = self.press.get_raw_timings()
+        return [*timings, -DOUBLE_PRESS_GAP_US, *timings]
