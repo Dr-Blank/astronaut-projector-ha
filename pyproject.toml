@@ -1,6 +1,6 @@
 [project]
 name = "astronaut-projector-ha"
-version = "1.2.0"
+version = "1.3.0"
 description = "Home Assistant integration for astronaut galaxy star projectors over infrared"
 requires-python = ">=3.14.2"
 dependencies = []
