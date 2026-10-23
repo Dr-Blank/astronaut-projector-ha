@@ -31,7 +31,7 @@ Projectors with a different remote, for example one with laser buttons, use othe
 
 | Entity | Type | What it does |
 | --- | --- | --- |
-| Power | switch | Sends the remote's power button. The projector has a single toggle code, so on and off send the same thing. |
+| Power | switch | Sends the remote's power button. The projector has a single toggle code, so on and off send the same thing. Turning on first sends a wake-up code that is not on the remote, then power half a second later. |
 | Stars | switch | On: short press of STAR. Off: long press. |
 | Nebula | switch | On: short press of NEBULA, which always starts at green. Off: long press. |
 | Nebula color | select | Steps the NEBULA button until the nebula shows the chosen colour. |
@@ -41,7 +41,7 @@ Projectors with a different remote, for example one with laser buttons, use othe
 | Nebula speed up / down | button | Static, then 4 speeds, stops at the ends. |
 | Star breathing up / down | button | Down goes towards steady stars, up towards slower breathing. |
 | Star brightness up / down | button | 3 levels, steady stars only. |
-| Power-on repeats | number (configuration) | NEC repeat bursts sent after the power frame when turning on, 0 to 6, default 1. Raise it if the projector turns off from Home Assistant but does not turn on. |
+| Power-on repeats | number (configuration) | NEC repeat bursts sent after the power frame when turning on, 0 to 6, default 1, like a tap on the remote. |
 
 Turning power on resets the assumed state to how the projector always comes up: stars on, nebula on in auto-cycle. While the projector is assumed off, the stars, nebula and colour refuse changes, because the projector ignores every button except power when off.
 
@@ -91,6 +91,6 @@ Delete the integration from **Settings > Devices & services**, then remove it in
 - **Stars or nebula**: turn it off, then on. Turning off is safe to repeat; turning on is skipped while Home Assistant believes it is already on, because a short press would change the colour or breathing instead.
 - **Nebula colour**: turn the nebula off and on (it restarts at green), then pick the colour.
 
-**Power turns the projector off but not on.** An off projector can miss a lone power frame while it wakes up. Raise **Power-on repeats** on the device page one step at a time until power-on works.
+**Power turns the projector off but not on.** Some units fall into a deeper sleep a few seconds after switching off and miss the first frame while they wake. Turning on sends a wake-up code first for this. If a unit still misses power-on, move the transmitter closer or aim it straight at the projector. Raising **Power-on repeats** did not help in testing.
 
 **Nothing reacts.** Check the transmitter is in line of sight and within a few metres, and that the projector is on: when it is off, it ignores everything except power.

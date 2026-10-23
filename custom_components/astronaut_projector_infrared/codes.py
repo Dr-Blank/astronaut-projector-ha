@@ -20,9 +20,13 @@ LONG_PRESS_REPEATS = 12
 # The most repeats that still read as a short press.
 SHORT_PRESS_MAX_REPEATS = 6
 
-# A tap on the remote sends the frame and one repeat. A projector that is off
-# can miss a lone frame while it wakes, so power-on sends the repeat as well.
+# A tap on the remote sends the frame and one repeat.
 DEFAULT_POWER_ON_REPEATS = 1
+
+# Not on the remote. Some units fall into a deeper sleep a few seconds after
+# switching off and spend the first frame they see waking up, so power-on sends
+# this first. An off projector ignores every code except power.
+WAKE_CODE = 0x00
 
 
 class AstronautProjectorCode(IntEnum):
@@ -52,3 +56,8 @@ class AstronautProjectorCode(IntEnum):
             command=self.value,
             repeat_count=LONG_PRESS_REPEATS if long_press else repeats,
         )
+
+
+def wake_command() -> Command:
+    """Build the frame that wakes a sleeping projector without pressing a button."""
+    return NECCommand(address=ADDRESS, command=WAKE_CODE, repeat_count=0)

@@ -55,7 +55,7 @@ async def test_power_on_repeats(
     assert sent(mock_emitter) == []
 
     await _power_on(hass)
-    assert sent(mock_emitter) == [(0x45, 3)]
+    assert sent(mock_emitter) == [(0x00, 0), (0x45, 3)]
 
 
 async def test_restore(
@@ -85,4 +85,4 @@ async def test_restore(
 
     assert hass.states.get(REPEATS).state == "4"
     await _power_on(hass)
-    assert sent(mock_emitter) == [(0x45, 4)]
+    assert sent(mock_emitter) == [(0x00, 0), (0x45, 4)]

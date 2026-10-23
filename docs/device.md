@@ -89,7 +89,13 @@ The integration sends 12 repeats (about 1.2 s) for a margin.
 ### Power
 
 - Short press toggles power [tested]. A long press does nothing extra [tested].
-- A tap on the remote sends the frame and one repeat: 46 of 48 captured taps, the other two came in quick succession with no repeat received [tested]. A lone frame with no repeat turns the unit off but did not turn it on in Home Assistant, so the integration sends one repeat on power-on by default.
+- A tap on the remote sends the frame and one repeat: 46 of 48 captured taps, the other two came in quick succession with no repeat received [tested].
+- Power-on from an infrared transmitter is unreliable on some units [tested, two units]. One unit came on about 65% of the time and the other about 100%, from the same transmitter and position. Off always worked.
+  - More repeats did not help: 1, 3, 6 and 12 repeats all gave about the same rate on the weak unit. 12 repeats did not toggle either unit back off.
+  - Changing the timing or a 36 kHz carrier made no difference.
+  - Sending right after switching off worked. The weak unit seems to fall into a deeper sleep a few seconds after switching off and spend the first frame waking up.
+  - Two full power frames 200 ms apart turned the weak unit on 10 times out of 10, but the other unit took both and turned on then straight off again.
+  - So the integration sends a wake-up frame first (address `0x00`, command `0x00`, not on the remote), then power 0.5 s later. Its effect on the weak unit is not tested yet.
 - While the unit is off, every other code is ignored. Only power turns it on [tested].
 - Power-on always comes up in the same state, with no memory of how it was switched off [tested]:
   - stars on
