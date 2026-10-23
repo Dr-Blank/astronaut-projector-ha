@@ -40,7 +40,7 @@ async def _select(hass: HomeAssistant, option: str) -> None:
     )
 
 
-@pytest.mark.usefixtures("init_integration")
+@pytest.mark.usefixtures("enable_power_on_settings", "init_integration")
 async def test_single_by_default(
     hass: HomeAssistant,
     entity_registry: er.EntityRegistry,
@@ -59,7 +59,7 @@ async def test_single_by_default(
     assert sent(mock_emitter) == [(0x45, 1)]
 
 
-@pytest.mark.usefixtures("init_integration")
+@pytest.mark.usefixtures("enable_power_on_settings", "init_integration")
 async def test_double_press(
     hass: HomeAssistant, mock_emitter: MockInfraredEmitterEntity
 ) -> None:
@@ -78,6 +78,7 @@ async def test_double_press(
     assert sent(mock_emitter) == [(0x45, 0)]
 
 
+@pytest.mark.usefixtures("enable_power_on_settings")
 async def test_restore(
     hass: HomeAssistant,
     mock_config_entry: MockConfigEntry,
@@ -96,3 +97,20 @@ async def test_restore(
         -200_000,
         *PRESS,
     ]
+
+
+@pytest.mark.usefixtures("init_integration")
+async def test_disabled_by_default(
+    hass: HomeAssistant,
+    entity_registry: er.EntityRegistry,
+    mock_emitter: MockInfraredEmitterEntity,
+) -> None:
+    """Test the power-on settings start disabled and power-on uses their defaults."""
+    for entity_id in (METHOD, "number.astronaut_projector_power_on_repeats"):
+        entry = entity_registry.async_get(entity_id)
+        assert entry is not None
+        assert entry.disabled_by is er.RegistryEntryDisabler.INTEGRATION
+        assert hass.states.get(entity_id) is None
+
+    await _switch(hass, SERVICE_TURN_ON)
+    assert sent(mock_emitter) == [(0x45, 1)]

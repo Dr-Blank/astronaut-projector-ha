@@ -90,13 +90,11 @@ The integration sends 12 repeats (about 1.2 s) for a margin.
 
 - Short press toggles power [tested]. A long press does nothing extra [tested].
 - A tap on the remote sends the frame and one repeat: 46 of 48 captured taps, the other two came in quick succession with no repeat received [tested].
-- Power-on from an infrared transmitter is unreliable on some units [tested, two units]. One unit came on about 65% of the time and the other about 100%, from the same transmitter and position. Off always worked.
-  - More repeats did not help: 1, 3, 6 and 12 repeats all gave about the same rate on the weak unit. 12 repeats did not toggle either unit back off.
-  - Changing the timing or a 36 kHz carrier made no difference.
-  - Sending right after switching off worked. The weak unit seems to fall into a deeper sleep a few seconds after switching off and spend the first frame waking up.
-  - Two full power frames 200 ms apart turned the weak unit on 10 times out of 10, but the other unit took both and turned on then straight off again.
-  - A wake-up frame that is not on the remote (address `0x00`, command `0x00`) sent 0.5 s before power made the weak unit worse: 1 out of 10.
-  - So no single signal suits both units. The integration's **Power-on method** select offers a single press (default) or a double press, 200 ms apart in one transmission.
+- Some units need the transmitter aimed straight at the receiver to turn on, though they turn off from an angle [tested, two units]. From a transmitter a few metres off-axis, one unit came on about half the time and the other every time. The weak unit came on 10 times out of 10 with the transmitter right in front of its receiver, sending a lone frame with no repeat.
+  - The signal was not the cause. The transmitter's output, measured through a second receiver, matched the remote's timing within about 20 µs.
+  - From the bad position, these did not make the weak unit reliable: 1 to 12 repeats, a 36 kHz carrier, slightly different timings, and a wake-up frame not on the remote (address `0x00`, command `0x00`) 0.5 s before power, which made it worse.
+  - Two power presses 200 ms apart did better on the weak unit, but the other unit took both and turned on then straight off again.
+  - 12 repeats did not toggle either unit back off.
 - While the unit is off, every other code is ignored. Only power turns it on [tested].
 - Power-on always comes up in the same state, with no memory of how it was switched off [tested]:
   - stars on

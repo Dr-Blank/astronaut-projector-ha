@@ -28,7 +28,7 @@ async def _power_on(hass: HomeAssistant) -> None:
     )
 
 
-@pytest.mark.usefixtures("init_integration")
+@pytest.mark.usefixtures("enable_power_on_settings", "init_integration")
 async def test_power_on_repeats(
     hass: HomeAssistant,
     entity_registry: er.EntityRegistry,
@@ -58,6 +58,7 @@ async def test_power_on_repeats(
     assert sent(mock_emitter) == [(0x45, 3)]
 
 
+@pytest.mark.usefixtures("enable_power_on_settings")
 async def test_restore(
     hass: HomeAssistant,
     mock_config_entry: MockConfigEntry,

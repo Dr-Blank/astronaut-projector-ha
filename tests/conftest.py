@@ -17,6 +17,12 @@ from custom_components.astronaut_projector_infrared.const import (
     CONF_INFRARED_EMITTER_ENTITY_ID,
     DOMAIN,
 )
+from custom_components.astronaut_projector_infrared.number import (
+    AstronautProjectorPowerOnRepeatsNumber,
+)
+from custom_components.astronaut_projector_infrared.select import (
+    AstronautProjectorPowerOnMethodSelect,
+)
 
 EMITTER_ENTITY_ID = "infrared.test_ir_emitter"
 
@@ -47,6 +53,24 @@ def auto_enable_custom_integrations(enable_custom_integrations: None) -> None:
 def no_press_gap() -> Generator[None]:
     """Send presses in a row without waiting between them."""
     with patch("custom_components.astronaut_projector_infrared.entity.PRESS_GAP", 0):
+        yield
+
+
+@pytest.fixture
+def enable_power_on_settings() -> Generator[None]:
+    """Enable the power-on settings, which are disabled by default."""
+    with (
+        patch.object(
+            AstronautProjectorPowerOnRepeatsNumber,
+            "_attr_entity_registry_enabled_default",
+            True,
+        ),
+        patch.object(
+            AstronautProjectorPowerOnMethodSelect,
+            "_attr_entity_registry_enabled_default",
+            True,
+        ),
+    ):
         yield
 
 

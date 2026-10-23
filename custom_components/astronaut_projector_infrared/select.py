@@ -102,6 +102,7 @@ class AstronautProjectorPowerOnMethodSelect(
     """How power-on is sent, picked by whichever the unit takes reliably."""
 
     _attr_entity_category = EntityCategory.CONFIG
+    _attr_entity_registry_enabled_default = False
     _attr_options = [method.value for method in PowerOnMethod]
 
     def __init__(self, entry: AstronautProjectorConfigEntry, key: str) -> None:

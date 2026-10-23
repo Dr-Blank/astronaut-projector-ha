@@ -29,6 +29,7 @@ class AstronautProjectorPowerOnRepeatsNumber(AstronautProjectorEntity, RestoreNu
     """How many NEC repeat bursts follow the power frame when turning on."""
 
     _attr_entity_category = EntityCategory.CONFIG
+    _attr_entity_registry_enabled_default = False
     _attr_mode = NumberMode.SLIDER
     _attr_native_min_value = 0
     _attr_native_max_value = SHORT_PRESS_MAX_REPEATS
